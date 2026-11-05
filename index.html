@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>สุขสันต์วันเกิดนะที่รัก</title>
+<title>คำอวยพรที่พุ่งมาหาน้ำ</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mali:wght@600&display=swap">
 <style>
 :root{color-scheme:dark;--bg:#000;--ink:#ffe3f1;--pink:#ff6ec4;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -33,23 +33,44 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 #intro p{margin:0;font-size:18px;opacity:.8}
 #heart{width:84px;height:84px;filter:drop-shadow(0 0 14px #ff3d7f);animation:beat 1.2s infinite}
 @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+#flightLayer{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+.flight-item{position:absolute;left:0;top:0;opacity:0;will-change:left,top,transform,opacity;text-align:center;filter:drop-shadow(0 0 10px #ff6ec4aa)}
+.flight-photo{width:clamp(76px,13vw,132px);padding:6px 6px 18px;background:#fff8ee;border:1px solid #fff;box-shadow:0 8px 26px #0009}
+.flight-photo img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover}
+.flight-text{max-width:min(74vw,340px);font-size:clamp(18px,4.1vw,34px);line-height:1.3;font-weight:600;color:#fff;text-shadow:0 0 7px currentColor,0 0 20px currentColor,0 0 36px currentColor}
+.wave-flight{animation:converge 3.2s cubic-bezier(.18,.68,.2,1) var(--delay) both}
+@keyframes converge{0%{left:var(--from-x);top:var(--from-y);transform:translate(-50%,-50%) scale(.52) rotate(var(--tilt));opacity:0}12%{opacity:1}38%{left:var(--to-x);top:var(--to-y);transform:translate(-50%,-50%) scale(1.08) rotate(0);opacity:1}88%{left:var(--to-x);top:var(--to-y);transform:translate(-50%,-50%) scale(1.08);opacity:1}100%{left:var(--to-x);top:var(--to-y);transform:translate(-50%,-50%) scale(.96);opacity:0}}
+.meteor-flight{animation:meteorFall 3.8s cubic-bezier(.18,.62,.3,1) var(--delay) both}
+.meteor-flight::after{content:"♥";position:absolute;left:50%;top:-30px;transform:translateX(-50%) rotate(-18deg);color:#ff9bc8;font-size:25px;text-shadow:0 0 8px #ff58bd,0 0 22px #ff58bd}
+@keyframes meteorFall{0%{left:var(--meteor-x);top:-90px;transform:translate(-50%,0) scale(.55) rotate(-12deg);opacity:0}12%{opacity:1}42%{top:38%;transform:translate(-50%,0) scale(1) rotate(8deg);opacity:1}70%{left:var(--meteor-mid-x);top:47%;transform:translate(-50%,0) scale(1.04) rotate(12deg);opacity:1}84%{left:var(--meteor-mid-x);top:47%;transform:translate(-50%,0) scale(1.04) rotate(12deg);opacity:1}100%{left:calc(var(--meteor-x) + var(--meteor-dx));top:calc(100% + 100px);transform:translate(-50%,0) scale(.85) rotate(22deg);opacity:0}}
+#openBirthday{position:fixed;left:50%;bottom:calc(78px + env(safe-area-inset-bottom,0px));transform:translate(-50%,14px);z-index:2;opacity:0;pointer-events:none;padding:12px 22px;border:1px solid #ffd0e699;border-radius:99px;background:#180912dd;color:#ffe6f1;font:inherit;font-size:clamp(15px,3.6vw,19px);box-shadow:0 0 24px #ff6ec455;cursor:pointer;transition:opacity .5s,transform .5s}
+.gift-ready #openBirthday{opacity:1;pointer-events:auto;transform:translate(-50%,0);animation:promptPulse 1.8s ease-in-out infinite alternate}
+@keyframes promptPulse{to{box-shadow:0 0 34px #ff6ec4aa;filter:brightness(1.2)}}
 #hint{position:fixed;left:0;right:0;bottom:calc(20px + env(safe-area-inset-bottom,0px));text-align:center;color:#ffd0e6;font-size:16px;line-height:1.5;opacity:0;pointer-events:none;text-shadow:0 0 8px #000}
 .go #hint{animation:hint 8s forwards}
 @keyframes hint{0%{opacity:0}8%,85%{opacity:1}100%{opacity:0}}
 #snd{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;width:44px;height:44px;border-radius:50%;border:1px solid #ffffff44;background:#00000088;color:#fff;font-size:20px;display:none;align-items:center;justify-content:center;z-index:1;cursor:pointer}
 .go #snd{display:flex}
-#envw{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;background:rgba(0,0,0,.8);opacity:0;pointer-events:none;transition:opacity .4s;z-index:3;color:#ffd0e6;cursor:pointer}
+#envw{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:radial-gradient(ellipse at 50% 72%,#351020bb,rgba(0,0,0,.9) 64%);opacity:0;pointer-events:none;transition:opacity .4s;z-index:3;color:#ffe8d8;cursor:pointer;overflow:hidden}
+#fireworks{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.firework{position:absolute;left:var(--x);bottom:5%;width:3px;height:48px;border-radius:50%;background:linear-gradient(to top,transparent,var(--spark));box-shadow:0 0 12px var(--spark);opacity:0;animation:firework 1.8s cubic-bezier(.18,.68,.24,1) var(--delay) forwards}
+.firework::before{content:"✦";position:absolute;left:50%;top:-22px;transform:translateX(-50%);font-size:28px;color:var(--spark);text-shadow:0 0 10px var(--spark),0 0 25px var(--spark)}
+.firework::after{content:"✧";position:absolute;left:50%;top:-18px;transform:translateX(14px);font-size:18px;color:#fff2c6;text-shadow:0 0 14px var(--spark)}
+@keyframes firework{0%{transform:translateY(0) scale(.45);opacity:0}12%{opacity:1}64%{transform:translateY(-58vh) scale(1);opacity:1}78%{transform:translateY(-58vh) scale(1.35);opacity:1}100%{transform:translateY(-58vh) scale(2.5);opacity:0}}
+#envHint{position:relative;margin:0;font-size:16px;opacity:.9;text-shadow:0 2px 12px #000}
 #envw.show{opacity:1;pointer-events:auto}
 #envw p{margin:0;font-size:16px;opacity:.7}
 #envw:focus-visible,#msgs:focus-visible{outline:3px solid #ff6ec4;outline-offset:-8px}
-.env{--w:min(80vw,340px);position:relative;width:var(--w);height:calc(var(--w)*.64);perspective:900px;margin-top:90px;transform:scale(.9);transition:transform .6s}
-#envw.show .env{transform:scale(1)}
-.back{position:absolute;inset:0;background:#c43b86;border-radius:8px}
-.card{position:absolute;left:8%;right:8%;top:8%;bottom:8%;background:linear-gradient(#fff,#ffe3f0);border-radius:8px;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;color:#b3195c;font-size:clamp(20px,6vw,26px);line-height:1.35;font-weight:600;z-index:2;box-shadow:0 0 26px rgba(255,110,196,.65);transition:transform 1s .7s cubic-bezier(.2,.8,.2,1)}
+.env{--w:min(82vw,360px);position:relative;width:var(--w);height:calc(var(--w)*.66);perspective:1100px;margin-top:34px;transform:scale(.82) translateY(30px);transition:transform .65s cubic-bezier(.2,.8,.2,1);filter:drop-shadow(0 22px 36px #0009)}
+#envw.show .env{transform:scale(1) translateY(0)}
+.back{position:absolute;inset:0;background:linear-gradient(145deg,#8d315a,#5d1b3b 72%);border:1px solid #f4c88788;border-radius:14px;box-shadow:inset 0 0 0 7px #4b173455}
+.back::after{content:"";position:absolute;inset:13px;border:1px solid #f6d9aa77;border-radius:8px}
+.card{position:absolute;left:9%;right:9%;top:8%;bottom:8%;background:linear-gradient(145deg,#fff9ed,#f3d9c5);border:1px solid #fff;border-radius:10px;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;color:#78344d;font-size:clamp(21px,6vw,28px);line-height:1.45;font-weight:600;z-index:2;box-shadow:0 8px 28px #1d061655;transition:transform 1s .65s cubic-bezier(.2,.8,.2,1)}
+.card small{display:block;margin-top:8px;font-size:.62em;color:#a76a63;font-weight:400}
 .opened .card{transform:translateY(-95%)}
-.front{position:absolute;inset:0;background:#e0509a;border-radius:8px;clip-path:polygon(0 0,50% 54%,100% 0,100% 100%,0 100%);z-index:3}
-.flap{position:absolute;left:0;top:0;width:100%;height:54%;background:#a82870;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;z-index:4;transition:transform .6s ease,z-index 0s .3s}
-.flap::after{content:"💗";position:absolute;left:50%;top:22%;transform:translateX(-50%);font-size:26px}
+.front{position:absolute;inset:0;background:linear-gradient(145deg,#ad4965,#85304f);border:1px solid #edbf8b88;border-radius:14px;clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);z-index:3;filter:drop-shadow(0 1px 1px #2b0716)}
+.flap{position:absolute;left:0;top:0;width:100%;height:56%;background:linear-gradient(165deg,#c16a77,#8c3858);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;z-index:4;transition:transform .8s cubic-bezier(.3,.7,.2,1),z-index 0s .4s;filter:drop-shadow(0 4px 5px #390c23)}
+.flap::after{content:"♥";position:absolute;left:50%;top:26%;transform:translateX(-50%);display:grid;place-items:center;width:48px;height:48px;border:3px solid #fff1d5;border-radius:50%;background:linear-gradient(145deg,#e8bd77,#b87754);color:#722c48;font-family:Georgia,serif;font-size:27px;box-shadow:0 3px 12px #320b1c88}
 .opened .flap{transform:rotateX(180deg);z-index:1}
 #end{position:fixed;inset:0;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:radial-gradient(circle at 50% 40%,#2a0a22,#000 70%);opacity:0;pointer-events:none;transition:opacity 1.2s;z-index:3;text-align:center;color:#ffd0e6}
 #end.show{opacity:1;pointer-events:auto}
@@ -67,7 +88,7 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 .pols{display:flex;justify-content:center;align-items:center;margin-bottom:10px}
 .pol{width:min(30vw,130px);background:#fff;padding:6px 6px 22px;margin:0 -8px;box-shadow:0 0 24px #ff6ec4aa;opacity:0;transform:rotate(var(--r)) translateY(40px);transition:opacity 1s,transform 1s}
 .pol:nth-child(2){z-index:1;margin-top:-26px}
-.pol img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.pol img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:opacity .35s}
 #end.show .pol{opacity:1;transform:rotate(var(--r))}
 #end.show .pol:nth-child(1){transition-delay:.5s}#end.show .pol:nth-child(2){transition-delay:1s}#end.show .pol:nth-child(3){transition-delay:1.5s}
 #end h2{margin:0;font-size:clamp(28px,8.5vw,42px);font-weight:600;color:#ff6ec4;text-shadow:0 0 12px #ff6ec4,0 0 32px #c2188a;animation:hue 6s linear infinite}
@@ -81,9 +102,11 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 </head>
 <body>
 <canvas id="c"></canvas>
-<div id="hint">ลากนิ้วเพื่อหมุนมุมกล้อง</div>
+<div id="flightLayer" aria-hidden="true"></div>
+<button id="openBirthday" type="button">💌 แตะ “สุขสันต์วันเกิด” เพื่อเปิดซอง</button>
+<div id="hint">คำอวยพรกำลังพุ่งมาหาน้ำ · ลากเพื่อหมุนมุมมอง</div>
 <button id="snd" aria-label="เปิดหรือปิดเสียงเพลง">🔊</button>
-<div id="envw" role="button" tabindex="0" aria-label="ปิดซองจดหมายและอ่านคำอวยพร"><div class="env" id="env"><div class="back"></div><div class="card"><span>สุขสันต์วันเกิด<br>น้ำสุดที่รัก</span></div><div class="front"></div><div class="flap"></div></div><p>แตะหรือกด Enter เพื่อปิด</p></div>
+<div id="envw" role="button" tabindex="0" aria-label="เปิดจดหมายอวยพร"><div id="fireworks" aria-hidden="true"></div><div class="env" id="env"><div class="back"></div><div class="card"><span>สุขสันต์วันเกิด<br>น้ำสุดที่รัก<br><small>ด้วยรักจากแก๊ส</small></span></div><div class="front"></div><div class="flap"></div></div><p id="envHint">กำลังจุดพลุให้คำอวยพร…</p></div>
 <div id="msgs" role="region" aria-label="ข้อความอวยพร" aria-live="polite" tabindex="0"><div id="msgStep" aria-hidden="true"></div><div id="mbox"></div><button id="skipMsgs" type="button" aria-label="ไปข้อความถัดไป">แตะเพื่ออ่านต่อ ›</button></div>
 <div id="end"><div class="pols"><div class="pol" style="--r:-9deg"><img alt=""></div><div class="pol" style="--r:0deg"><img alt=""></div><div class="pol" style="--r:9deg"><img alt=""></div></div><h2>สุขสันต์วันเกิดนะน้ำ</h2><p>รักน้ำที่สุดเลยนะ 💗</p><button id="again">ดูอีกครั้ง</button></div>
 <section id="lock" aria-labelledby="lockTitle"><header id="lockHead"><div id="lockIcon" aria-hidden="true">🔒</div><div id="lockClock" aria-label="เวลา">00:00</div><p id="lockDate"></p><h1 id="lockTitle">สุขสันต์วันเกิดนะที่รัก 💗</h1></header><form id="unlockForm"><label for="passcode">ป้อนรหัสเพื่อปลดล็อค</label><input id="passcode" name="passcode" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off" required aria-label="รหัสปลดล็อค 4 หลัก" aria-describedby="lockError"><div id="keypad" role="group" aria-label="แป้นตัวเลข"><button class="key" type="button" data-key="1">1</button><button class="key" type="button" data-key="2">2</button><button class="key" type="button" data-key="3">3</button><button class="key" type="button" data-key="4">4</button><button class="key" type="button" data-key="5">5</button><button class="key" type="button" data-key="6">6</button><button class="key" type="button" data-key="7">7</button><button class="key" type="button" data-key="8">8</button><button class="key" type="button" data-key="9">9</button><button class="key action" type="button" data-key="clear">ล้าง</button><button class="key" type="button" data-key="0">0</button><button class="key action" type="button" data-key="back" aria-label="ลบตัวเลขล่าสุด">⌫</button></div><p id="lockError" role="status" aria-live="polite"></p></form></section>
@@ -95,18 +118,18 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 <script>
 (function(){
   var MSGS=["สุขสันต์วันเกิดนะน้ำสุดที่รัก","สุขสันต์วันเกิดนะน้ำ","น้ำคือคนสำคัญของเค้า","รักน้ำที่สุดเลย","ขอให้น้ำมีความสุขทุกวัน","ขอบคุณที่น้ำอยู่ข้างกันนะ","อยู่กับเค้าไปนานๆ นะน้ำ","น้ำคือคนที่เค้ารัก","ปีนี้ขอให้ทุกอย่างดีสำหรับน้ำ","ยิ้มของน้ำทำให้เค้าใจฟู","อยากกอดน้ำแน่นๆ","สุขสันต์วันเกิดนะน้ำ","วันเกิดน้ำ วันที่พิเศษที่สุด","น้ำเก่งที่สุดเลย","รักน้ำนะ","ขอให้ทุกพรของน้ำเป็นจริง"];
-  var HUGE=["💌 แตะเปิดซองนี้","มีจดหมายถึงน้ำ 💌","💌 แตะตรงนี้นะ"];
+  var HUGE=["สุขสันต์วันเกิดนะน้ำ 💌","มีจดหมายถึงน้ำ 💌","สุขสันต์วันเกิดนะน้ำ 💌"];
   var cv=document.getElementById('c'),ctx=cv.getContext('2d');
-  var tStart=0,W,H,DPR,started=false,cam=0,roll=0,t0=0,yawU=0,pitU=0,yaw=0,pit=0,down=false;
+  var tStart=0,W,H,DPR,started=false,cam=0,roll=0,t0=0,elapsed=0,yawU=0,pitU=0,yaw=0,pit=0,down=false,flightLayer=document.getElementById('flightLayer'),flightEpoch=0,flightCycle=-1,flightStopped=false;
   var cr,sr,cY,sY,cP,sP,cx,cy,K,hits=[];
   var DEPTH=3200,NEAR=160,F=520;
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   function rnd(a,b){return a+Math.random()*(b-a)}
-  var PH=['images/birthday-1.jpg','images/birthday-2.jpg','images/birthday-3.jpg'];var imgs=PH.map(function(u){var m=new Image();m.src=u;return m});
+  var PH=['images/46495685_1556519374451092_3053838257033838592_n.jpg','images/493359008_8832798246823132_3992588644009468589_n.jpg','images/493911924_8825160247586932_605914337059212591_n.jpg','images/494075997_8811899238913033_935139393286679600_n.jpg','images/495568108_8917376505031972_822143065650355839_n.jpg','images/496769140_8944841682285454_1761607213707668367_n.jpg','images/500514187_9057106354392319_5190392092586652033_n.jpg','images/502410849_9076172875819000_7413372667754354825_n.jpg','images/502412054_9080084525427835_5612320304953910011_n.jpg','images/502582669_9080091765427111_1389446865392445982_n.jpg','images/birthday-1.jpg','images/birthday-2.jpg','images/birthday-3.jpg'];var imgs=PH.map(function(u){var m=new Image();m.src=u;return m});
   var items=[],hearts=[],big=[],i;
-  for(i=0;i<95;i++)items.push({x:rnd(-900,900),y:rnd(-1300,1300),z:rnd(0,DEPTH),a:rnd(-.34,-.14),s:rnd(30,46),m:MSGS[i%MSGS.length],h:rnd(0,360)});
+  for(i=0;i<95;i++){var wa=rnd(0,Math.PI*2),wr=Math.max(W,H)*2.3;items.push({x:Math.cos(wa)*wr,y:Math.sin(wa)*wr,z:rnd(0,DEPTH),a:rnd(-.28,.28),s:rnd(28,44),m:MSGS[i%MSGS.length],h:rnd(0,360),wave:1,waveStart:i*8.2/95,meteorX:rnd(-W*.48,W*.48),meteorDx:rnd(-150,150)})}
   var gift={x:0,y:-60,z:0,a:-.12,s:170,m:HUGE[0],huge:1,h:300,fi:0};
-  for(i=0;i<6;i++)items.push({photo:imgs[i%3],x:rnd(-380,380),y:rnd(-650,650),z:(i/6)*DEPTH+rnd(0,200),a:rnd(-.25,.25),w:240});
+  for(i=0;i<PH.length;i++){var pa=rnd(0,Math.PI*2),pr=Math.max(W,H)*2.3;items.push({photo:imgs[i],x:rnd(-520,520),y:rnd(-850,850),waveX:Math.cos(pa)*pr,waveY:Math.sin(pa)*pr,photoIndex:i,wavePhoto:1,meteorX:rnd(-W*.48,W*.48),meteorDx:rnd(-170,170),z:(i/PH.length)*DEPTH+rnd(0,200),a:rnd(-.25,.25),w:240})}
   for(i=0;i<46;i++)hearts.push({x:rnd(-900,900),y:rnd(-1300,1300),z:rnd(0,DEPTH),s:rnd(14,34),r:rnd(-.5,.5)});
   for(i=0;i<3;i++)big.push({x:rnd(-420,420),y:rnd(-700,700),z:rnd(0,DEPTH),s:rnd(180,240),r:rnd(-.3,.3),h:rnd(0,360)});
   function size(){DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0)}
@@ -116,16 +139,48 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
   function fade(dz){var f=1;if(dz>DEPTH*.72)f=Math.max(0,(DEPTH+NEAR-dz)/(DEPTH*.28+NEAR));if(dz<420)f=Math.min(f,(dz-NEAR)/260);return f}
   var list=[];
   function push(o,kind){
-    var dz=dzOf(o.z),X=o.x*cr-o.y*sr,Y=o.x*sr+o.y*cr,z1=-X*sY+dz*cY,z2=Y*sP+z1*cP;
+    if(started&&(kind===0&&o.wave||kind===3&&o.wavePhoto))return;
+    var wx=o.x,wy=o.y,dz=dzOf(o.z),waveFade=1,waveScale=1,phase=elapsed-tStart,meteor=false,mq=0;
+    if(started&&kind===0&&o.wave){
+      if(phase<0||phase>=20)return;
+      if(phase<10){mq=(phase-o.waveStart)/2.2;if(mq<0||mq>1)return;wx*=1-mq;wy*=1-mq;dz=NEAR+1300;waveFade=Math.min(1,mq*4)*Math.min(1,(1-mq)*4);waveScale=.7+1.4*mq}
+      else{var textMeteorStart=10+o.waveStart;mq=(phase-textMeteorStart)/1.7;if(mq<0||mq>1)return;meteor=true;wx=0;wy=0;dz=NEAR+1700*(1-mq);waveFade=Math.min(1,mq*4)*Math.min(1,(1-mq)*4);waveScale=.8+.35*mq}
+    }
+    if(started&&kind===3&&o.wavePhoto&&phase<20){
+      var round=phase<10?0:10,photoStart=round+o.photoIndex*8.5/PH.length;
+      if(phase>=10){photoStart=10+o.photoIndex*8.2/PH.length;mq=(phase-photoStart)/1.7;if(mq<0||mq>1)return;meteor=true;wx=0;wy=0;dz=NEAR+1700*(1-mq);waveFade=Math.min(1,mq*4)*Math.min(1,(1-mq)*4);waveScale=.72+.4*mq}
+      else{mq=(phase-photoStart)/2.2;if(mq<0||mq>1)return;wx=o.waveX*(1-mq);wy=o.waveY*(1-mq);dz=NEAR+1300;waveFade=Math.min(1,mq*4)*Math.min(1,(1-mq)*4);waveScale=.7+1.4*mq}
+    }
+    var X=wx*cr-wy*sr,Y=wx*sr+wy*cr,z1=-X*sY+dz*cY,z2=Y*sP+z1*cP;
     if(z2<NEAR)return;
-    var f=Math.min(fade(dz),(z2-NEAR)/260);if(o.fi!==undefined)f*=o.fi;if(f<=0)return;
-    var sc=F/z2*K;
-    list.push({d:z2,o:o,k:kind,sx:cx+(X*cY+dz*sY)*sc,sy:cy+(Y*cP-z1*sP)*sc,sc:sc,f:f});
+    var f=Math.min(fade(dz),(z2-NEAR)/260)*waveFade;if(o.fi!==undefined)f*=o.fi;if(f<=0)return;
+    var sc=F/z2*K*waveScale;if(meteor&&kind===3)sc=Math.min(sc,1.15);if(meteor&&kind===0)sc=Math.min(sc,1.8);
+    var sx=meteor?cx+o.meteorX+mq*o.meteorDx:cx+(X*cY+dz*sY)*sc;
+    var sy=meteor?-80+mq*(H+160):cy+(Y*cP-z1*sP)*sc;
+    list.push({d:z2,o:o,k:kind,sx:sx,sy:sy,sc:sc,f:f,meteor:meteor,mq:mq});
+  }
+  function buildFlightCycle(cycle){
+    flightLayer.innerHTML='';
+    function addFlight(el,mode,startX,startY,targetX,targetY,delay,tilt,meteorX,meteorDx,duration){
+      el.classList.add('flight-item',mode==='meteor'?'meteor-flight':'wave-flight');
+      el.style.setProperty('--delay',delay+'s');el.style.setProperty('--tilt',tilt+'deg');el.style.animationDuration=duration+'s';
+      if(mode==='meteor'){el.style.setProperty('--meteor-x',meteorX+'px');el.style.setProperty('--meteor-dx',meteorDx+'px');el.style.setProperty('--meteor-mid-x',(meteorX+meteorDx*.7)+'px')}
+      else{el.style.setProperty('--from-x',startX+'px');el.style.setProperty('--from-y',startY+'px');el.style.setProperty('--to-x',targetX+'px');el.style.setProperty('--to-y',targetY+'px')}
+      flightLayer.appendChild(el);
+    }
+    var radius=Math.max(W,H)*.72,wavePhotoIds=[0,2,4,6,8,10,12],meteorPhotoIds=[1,3,5,7,9,11];
+    wavePhotoIds.forEach(function(photoId,n){var angle=(n/wavePhotoIds.length)*Math.PI*2,delay=n*1.05,el=document.createElement('div');el.className='flight-photo';var im=document.createElement('img');im.src=PH[photoId];im.alt='';el.appendChild(im);var tx=W*(.32+Math.random()*.36),ty=H*(.30+Math.random()*.4);addFlight(el,'wave',W/2+Math.cos(angle)*radius,H/2+Math.sin(angle)*radius,tx,ty,delay,rnd(-14,14),0,0,3.2)});
+    meteorPhotoIds.forEach(function(photoId,n){var el=document.createElement('div');el.className='flight-photo';var im=document.createElement('img');im.src=PH[photoId];im.alt='';el.appendChild(im);addFlight(el,'meteor',0,0,0,0,10+n*1.15,0,W*(.12+.15*n),rnd(-80,80),3.8)});
+    for(var n=0;n<4;n++){
+      var txEl=document.createElement('div');txEl.className='flight-text';txEl.textContent=MSGS[(n+cycle*5)%MSGS.length];txEl.style.color='hsl('+((330+n*47+cycle*29)%360)+',100%,78%)';
+      var angle=rnd(0,Math.PI*2),tx=W*(.28+Math.random()*.44),ty=H*(.30+Math.random()*.4);addFlight(txEl,'wave',W/2+Math.cos(angle)*radius,H/2+Math.sin(angle)*radius,tx,ty,n*2.2,rnd(-10,10),0,0,3.2);
+      var meteor=document.createElement('div');meteor.className='flight-text';meteor.textContent=MSGS[(n+cycle*7+3)%MSGS.length];meteor.style.color='hsl('+((330+n*47+cycle*31)%360)+',100%,78%)';addFlight(meteor,'meteor',0,0,0,0,10+n*2,0,W*(.2+n*.2),rnd(-70,70),3.8);
+    }
   }
   function frame(ts){
-    if(!t0)t0=ts;var t=(ts-t0)/1000;
+    if(!t0)t0=ts;var t=(ts-t0)/1000;elapsed=t;
     var dt=Math.min(.05,(frame.l?ts-frame.l:16)/1000);frame.l=ts;
-    if(started){cam+=dt*(reduce?60:240);if(!tStart)tStart=t;if(t-tStart>10){if(items.indexOf(gift)<0)items.push(gift);gift.z=cam+800;gift.fi=Math.min(1,(t-tStart-10)/1.5)}}
+    if(started){cam+=dt*(reduce?60:240);if(!tStart)tStart=t;if(flightEpoch&&!flightStopped&&ts>=flightEpoch){var seq=(ts-flightEpoch)/1000,cycle=Math.floor(seq/20);if(cycle!==flightCycle){flightCycle=cycle;buildFlightCycle(cycle)}if(seq>=20)document.body.classList.add('gift-ready')}if(t-tStart>20){if(items.indexOf(gift)<0)items.push(gift);gift.z=cam+800;gift.fi=Math.min(1,(t-tStart-20)/1.5)}}
     if(!down){yawU-=yawU*dt*.25;pitU-=pitU*dt*.25}
     roll=reduce?0:Math.sin(t*.35)*.06;
     yaw=yawU+(reduce?0:Math.sin(t*.23)*.12);pit=pitU+(reduce?0:Math.sin(t*.19)*.06);
@@ -144,6 +199,7 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
       var e=list[j],o=e.o,sc=e.sc,f=e.f,sx=e.sx,sy=e.sy;
       if(sx<-400||sx>W+400||sy<-300||sy>H+300)continue;
       ctx.save();ctx.translate(sx,sy);
+      if(e.meteor){ctx.save();ctx.globalCompositeOperation='lighter';ctx.shadowColor='hsla('+((o.h||320)+t*35)%360+',100%,70%,.9)';ctx.shadowBlur=Math.min(20,12*sc);ctx.strokeStyle='rgba(255,175,220,'+(.72*f)+')';ctx.lineWidth=Math.max(2,3*sc);ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-2,8*sc);ctx.quadraticCurveTo(10,-24*sc,0,-58*sc);ctx.stroke();ctx.fillStyle='rgba(255,110,196,'+(.9*f)+')';ctx.font=Math.max(14,30*sc)+'px sans-serif';ctx.fillText('♥',0,-34*sc);ctx.restore()}
       if(e.k===0){
         var ang=o.a+roll+yaw*.3;ctx.rotate(ang);
         var fs=o.s*sc*(o.huge?1+.05*Math.sin(t*3):1);if(fs<5){ctx.restore();continue}
@@ -192,9 +248,12 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
   });
   cv.addEventListener('pointercancel',function(){down=false});
   var envw=document.getElementById('envw');
-  function openEnv(){envw.classList.add('show');setTimeout(function(){envw.classList.add('opened')},450)}
+  function openEnv(){if(envw.classList.contains('show'))return;flightStopped=true;flightLayer.innerHTML='';document.body.classList.remove('gift-ready');envw.classList.add('show');envw.focus();launchFireworks();setTimeout(function(){envw.classList.add('opened')},900);setTimeout(function(){envw.classList.add('ready');document.getElementById('envHint').textContent='แตะเพื่ออ่านจดหมาย 💌'},2700)}
+  function launchFireworks(){var box=document.getElementById('fireworks');box.innerHTML='';var colors=['#ffd27d','#ff79bd','#8df4ff','#c9ff83','#f6a7ff','#fff3cd','#ff7e65'];colors.forEach(function(color,n){var spark=document.createElement('span');spark.className='firework';spark.style.setProperty('--x',(8+n*13)+'%');spark.style.setProperty('--spark',color);spark.style.setProperty('--delay',(n*.12)+'s');box.appendChild(spark);spark.addEventListener('animationend',function(){spark.remove()})})}
   var endEl=document.getElementById('end');
-  document.querySelectorAll('#end img').forEach(function(m,n){m.src=PH[n]});
+  var endPhotos=Array.from(document.querySelectorAll('#end img')),endPhotoTimer=0,endPhotoIndex=0;
+  endPhotos.forEach(function(m,n){m.src=PH[n%PH.length];m.alt='ภาพความทรงจำ '+(n+1)});
+  function cycleEndPhotos(){clearInterval(endPhotoTimer);endPhotoTimer=setInterval(function(){endPhotoIndex=(endPhotoIndex+3)%PH.length;endPhotos.forEach(function(m,n){m.style.opacity='0';setTimeout(function(){m.src=PH[(endPhotoIndex+n)%PH.length];m.alt='ภาพความทรงจำ '+(((endPhotoIndex+n)%PH.length)+1);m.style.opacity='1'},350)})},1400)}
   for(i=0;i<16;i++){var sp=document.createElement('span');sp.className='hr';sp.textContent=i%3?'💗':'❤️';sp.style.cssText='left:'+rnd(2,96)+'%;font-size:'+rnd(14,30)+'px;animation-duration:'+rnd(6,12)+'s;animation-delay:'+rnd(0,8)+'s';endEl.appendChild(sp)}
   var msgsEl=document.getElementById('msgs'),mbox=document.getElementById('mbox'),msgIndex=0,msgToken=0,msgTimer=0,mdone=null;
   var SETS=[["สุขสันต์วันเกิดนะคับน้ำ!","แก๊สไม่มีอะไรจะให้นอกจากความรักก้อนโต (กับความกวนประสาทที่มีให้ทุกวัน 555)","ขอให้ปีนี้สวยวันสวยคืน รวย ๆ เฮง ๆ แล้วก็ตามใจแก๊สเยอะ ๆ นะ","รักนะจุ๊บ ๆ"],["แฮปปี้เบิร์ธเดย์ครับตัวแสบของแก๊ส","แก๊สขอให้ปีนี้เป็นปีที่ดีที่สุดของน้ำเลยนะ","อยากได้อะไรเดี๋ยวจัดให้ (ถ้าตังค์ในกระเป๋าไหว 555)","รักและดูแลกันแบบนี้ไปนาน ๆ เลยนะคับ!"]];
@@ -213,10 +272,11 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
   msgsEl.addEventListener('click',function(e){if(e.target!==document.getElementById('skipMsgs'))nextMsgSet()});
   document.getElementById('skipMsgs').addEventListener('click',function(e){e.stopPropagation();nextMsgSet()});
   msgsEl.addEventListener('keydown',function(e){if(e.key==='Escape'||e.key==='Enter'||e.key===' '){e.preventDefault();nextMsgSet()}});
-  function closeEnvelope(){if(!envw.classList.contains('show'))return;envw.classList.remove('show','opened');setTimeout(function(){runMsgs(function(){endEl.classList.add('show')})},500)}
+  function closeEnvelope(){if(!envw.classList.contains('show')||!envw.classList.contains('ready'))return;envw.classList.remove('show','opened');setTimeout(function(){runMsgs(function(){endEl.classList.add('show');cycleEndPhotos()})},500)}
+  document.getElementById('openBirthday').addEventListener('click',openEnv);
   envw.addEventListener('click',closeEnvelope);
   envw.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();closeEnvelope()}});
-  document.getElementById('again').addEventListener('click',function(){endEl.classList.remove('show');var gi=items.indexOf(gift);if(gi>=0)items.splice(gi,1);gift.fi=0;tStart=0});
+  document.getElementById('again').addEventListener('click',function(){clearInterval(endPhotoTimer);flightStopped=false;flightEpoch=performance.now()+850;flightCycle=-1;flightLayer.innerHTML='';document.body.classList.remove('gift-ready');endEl.classList.remove('show');var gi=items.indexOf(gift);if(gi>=0)items.splice(gi,1);gift.fi=0;tStart=0});
   /* music: a music-box Happy Birthday made with Web Audio */
   var AC=null,master=null,muted=false,musicTimer=0,snd=document.getElementById('snd');
   var MEL=[[392,.75],[392,.25],[440,1],[392,1],[523,1],[494,2],[392,.75],[392,.25],[440,1],[392,1],[587,1],[523,2],[392,.75],[392,.25],[784,1],[659,1],[523,1],[494,1],[440,2],[698,.75],[698,.25],[659,1],[523,1],[587,1],[523,2]];
@@ -242,7 +302,7 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
   function submitCode(){if(passcode.value.length===4)unlockForm.requestSubmit()}
   document.getElementById('keypad').addEventListener('click',function(e){var key=e.target.getAttribute('data-key');if(!key)return;if(key==='clear')passcode.value='';else if(key==='back')passcode.value=passcode.value.slice(0,-1);else if(passcode.value.length<4)passcode.value+=key;lockError.textContent='';if(key!=='clear'&&key!=='back')submitCode()});
   unlockForm.addEventListener('submit',function(e){e.preventDefault();if(passcode.value===BIRTHDAY_CODE){lockError.textContent='';lock.classList.add('hide');setTimeout(function(){lock.hidden=true;intro.focus()},650)}else{lockError.textContent='รหัสไม่ถูกต้อง ลองอีกครั้งนะ';passcode.value='';passcode.focus()}});
-  function go(){if(started)return;started=true;intro.classList.add('hide');document.body.classList.add('go');startMusic()}
+  function go(){if(started)return;started=true;flightEpoch=performance.now()+850;intro.classList.add('hide');document.body.classList.add('go');startMusic()}
   intro.addEventListener('click',go);
   intro.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')go()});
   (document.fonts&&document.fonts.load?document.fonts.load('600 30px Mali','คิดถึง').catch(function(){}):Promise.resolve()).then(function(){requestAnimationFrame(frame)});
@@ -250,3 +310,5 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 </script>
 </body>
 </html>
+
+
